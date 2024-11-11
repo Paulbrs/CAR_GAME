@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car racing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="road"></div>
+
+    <img class="car" src="images/car.png" alt="car">
+   
+    <img class="tree tree1" src="images/tree1.png" alt="tree 1">
+    <img class="tree tree2" src="images/tree2.png" alt="tree 2">
+    <img class="tree tree3" src="images/tree3.png" alt="tree 3">
+    <img class="tree tree4" src="images/tree1.png" alt="tree 1">
+    <img class="tree tree5" src="images/tree2.png" alt="tree 2">
+    <img class="tree tree6" src="images/tree3.png" alt="tree 3">
+    
+    <img class="arrow" src="images/arrow.png" alt="arrow">
+    <img class="another_way" src="images/another_way.png" alt="another_way"> 
+    <img class="coin" src="images/coin.png" alt="coin">
+
+    <button type="button" class="game-button">
+        <img class="pause" src="images/pause.png" alt="pause">
+        <img class="play" src="images/play.png" alt="play">
+    </button>
+
+    <div class="game-score">0</div>
+    
+    <div class="backdrop">
+        <div class="backdrop-container">
+            <p class="finish-text">Game over: <span class="finish-text-score">0</span></p>
+            <button type="button" class="restart-button">Try again </button>
+        </div>
+    </div>
+
+    <script src="./js/constants.js"></script>
+    <script src="./js/utils/createElementInfo.js"></script>
+    <script src="./js/utils/getCoords.js"></script> 
+    <script src="./js/utils/hasCollision.js"></script> 
+    <script src="./js/movement.js"></script> 
+    <script src="./js/treesAnimation.js"></script>  
+    <script src="./js/elementAnimation.js"></script>  
+    <script src="./js/main.js"></script> 
+    <script>
+        const restartButton = document.querySelector('.restart-button'); 
+
+        restartButton.addEventListener('click', () => {
+            window.location.reload();
+        });
+
+    </script>
+</body>
+</html>
