@@ -90,6 +90,87 @@
 
     });
 
+    // Переменные для обработки касаний на телефоне
+    let touchStartX = null;
+    let touchStartY = null;
+
+    function handleSwipeDirection(direction) {
+    if (isPause) {
+        return;
+    }
+
+    if ((direction === 'up') && carInfo.move.top === null) {
+        if (carInfo.move.bottom) {
+            return;
+        }
+        carInfo.move.top = requestAnimationFrame(() => carMoveToTop(car, carInfo));
+    } else if ((direction === 'down') && carInfo.move.bottom === null) {
+        if (carInfo.move.top) {
+            return;
+        }
+        carInfo.move.bottom = requestAnimationFrame(() => carMoveToBottom(car, carInfo));
+    } else if ((direction === 'left') && carInfo.move.left === null) {
+        if (carInfo.move.right) {
+            return;
+        }
+        carInfo.move.left = requestAnimationFrame(() => carMoveToLeft(car, carInfo));
+    } else if ((direction === 'right') && carInfo.move.right === null) {
+        if (carInfo.move.left) {
+            return;
+        }
+        carInfo.move.right = requestAnimationFrame(() => carMoveToRight(car, carInfo));
+    }
+}
+
+    // Обработчик нажатия клавиш и касаний
+    document.addEventListener('keydown', (event) => {
+        const code = event.code;
+
+        if (code === 'ArrowUp' || code === 'KeyW') {
+            handleSwipeDirection('up');
+        } else if (code === 'ArrowDown' || code === 'KeyS') {
+            handleSwipeDirection('down');
+        } else if (code === 'ArrowLeft' || code === 'KeyA') {
+            handleSwipeDirection('left');
+        } else if (code === 'ArrowRight' || code === 'KeyD') {
+            handleSwipeDirection('right');
+        }
+    });
+
+// Обработка касаний
+    document.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const touchEndY = event.changedTouches[0].clientY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        // Определяем направление свайпа
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            // Горизонтальный свайп
+            if (diffX > 0) {
+                handleSwipeDirection('right');
+            } else {
+                handleSwipeDirection('left');
+            }
+        } else {
+            // Вертикальный свайп
+            if (diffY > 0) {
+                handleSwipeDirection('down');
+            } else {
+                handleSwipeDirection('up');
+            }
+        }
+
+        // Сбрасываем начальные координаты касания
+        touchStartX = null;
+        touchStartY = null;
+    });
+
     // const tree1 = trees[0];
     // const coordsTree1 = getCoords(tree1);
 
@@ -177,3 +258,4 @@
         }
     });
 })();
+
